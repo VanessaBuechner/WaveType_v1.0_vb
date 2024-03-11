@@ -1,0 +1,101 @@
+@font-face {
+    font-family: Josefin Sans;
+    src:url("fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf");
+ }
+
+ @font-face {
+    font-family: Josefin Sans Bold;
+    src:url("fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf");
+    font-weight: bold;
+ }
+
+ @font-face {
+    font-family: Josefin Sans Italic;
+    src:url("fonts/Josefin_Sans/JosefinSans-Italic-VariableFont_wght.ttf");
+ }
+
+:root {
+    --red-primary: #F45959;
+    --red-secondary: #F8ABAB;
+    --grey-primary: #282828;
+    --black: #000000;
+    --white: #ffffff;
+
+    --after-lyrics: #F8ABAB;
+    --during-lyrics: #F45959;
+    --before-lyrics: #FBE7E7;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  font-family: Josefin Sans;
+  color: var(--white);
+
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    background-color: var(--grey-primary);
+
+    display: grid;
+    grid-template-areas: "header"
+                         "main"
+                         "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(5vw,auto) 1fr 5vw;
+}
+
+/* ---------------header------------------------------ */
+
+header{
+    grid-area: header;
+    background-color: transparent;
+
+    display: flex;
+    justify-content: end;
+}
+
+nav{
+    width: 5vw;
+    height: 5vw;
+
+    padding: 5px;
+    margin-right: 10px;
+    overflow-wrap: break-word;
+
+    background-color: black;
+    text-align: center;
+}
+
+ul{
+    list-style: none;
+}
+
+a.home-btn{
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: calc(5vw * 0.4);
+}
+
+/* ---------------main------------------------------ */
+
+main{
+    grid-area: main;
+    background-color: rgb(160, 160, 160);
+}
+
+/* ---------------footer------------------------------ */
+
+footer{
+    grid-area: footer;
+    background-color: rgb(38, 38, 38);
+}
