@@ -12,11 +12,7 @@ Improves typing speed and accuracy
 
 -----------------------------------------
 
-Sure, here's a quick documentation for your Express application:
-
----
-
-# Express Application Documentation
+# WaveType Express Application Documentation
 
 ## Overview
 
