@@ -170,19 +170,19 @@ app.post('/users', async (request, response) => {
 
 //---------------------LYRICS API CALL--------------------------
 
-app.post('/search', function (req, res){
-        const token_musix_match = '022ff8e27231cdc93a8f12b489f30fb1'
+app.post('/search', function (request, response){
+        const token_musix_match = process.env.API_TOKEN
         const api_link_musix_match = 'https://api.musixmatch.com/ws/1.1/'
 
-        const artist_musix_match = req.body.artist
-        const track_musix_match = req.body.track
+        const artist_musix_match = request.body.artist
+        const track_musix_match = request.body.track
 
         const query_musix_match = `${api_link_musix_match}track.search?q_artist=${artist_musix_match}&q_track=${track_musix_match}&page_size=1&page=1&s_track_rating=desc&apikey=${token_musix_match}`
 
        
 
         fetch(query_musix_match)
-        .then(res_id => res_id.json())
+        .then(response_id => response_id.json())
         .then((json_id) => {
             let track_id = ''
             track_id += json_id.message.body.track_list[0].track.track_id
@@ -195,27 +195,26 @@ app.post('/search', function (req, res){
                 throw 'There is no artist or track in the musixmatch database'
             }  
         })
-        .then(res_lyrics => res_lyrics.json())
+        .then(response_lyrics => response_lyrics.json())
         .then((json_lyrics) => {
             if(json_lyrics.message.header.status_code == 200){
                 const lyrics = json_lyrics.message.body.lyrics.lyrics_body
 
                 // lyrics = lyrics.split('*******')[0].split('\n')
-                // res.send(insertTextHtml(lyrics))
-                res.render('index', {lyrics: lyrics, scroll: '.display-start'})
+                response.render('index', {lyrics: lyrics, scroll: '.display-start'})
             }else{
                 throw 'The artist or track does not have lyrics'
             } 
         })
         .catch((err) => {
             console.log(err)
-            res.redirect('/error')
+            response.redirect('/error')
         })
  
 })
 
-app.get('/error', (req, res) => {
-    res.send(`The artist or track does not have lyrics`)
+app.get('/error', (request, res) => {
+    response.send(`The artist or track does not have lyrics`)
 })
 
 //-----------------------------------------------

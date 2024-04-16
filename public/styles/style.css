@@ -294,12 +294,16 @@ main-container-3{
     justify-self: center;
     padding: 50px;
 
-    background-color: grey;
+    background-color: var(--grey-primary);
 }
 
 .form-container > h2{
     text-transform: uppercase;
     padding-bottom: 10px;
+}
+
+a.view-users:hover{
+    color: var(--red-primary);
 }
 
 .input-field{

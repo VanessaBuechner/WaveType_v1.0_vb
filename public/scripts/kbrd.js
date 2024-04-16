@@ -2,7 +2,6 @@ const colorUntyped = 'rgb(189, 189, 189)'
                 const display = document.querySelector('.display-text')
                 const keyboard = document.querySelector('.keyboard')
 
-                // const sentence = 'motherfucker'
                 const sentence = document.querySelector('.lyrics-span').innerText
                 const kb_rows = [
                         '^ 1 2 3 4 5 6 7 8 9 0 ß ´ Backspace',

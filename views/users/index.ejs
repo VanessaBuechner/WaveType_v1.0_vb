@@ -11,7 +11,7 @@
         <ul>
           <% users.forEach(user => { %>
             <li>
-                <a href="/users/view/<%= user.slug %>"><%= user.name %>: <%= user.score %></a>
+                <a class="view-users" href="/users/view/<%= user.slug %>"><%= user.name %>: <%- readableScore(user.score) %></a>
             </li>
           <% }) %>
         </ul>
