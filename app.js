@@ -1,12 +1,13 @@
 import express from "express"
 import mongoose from "mongoose"
+import "dotenv/config"
 import { logger } from './middlewares/logger.js'
 import { readableScore } from "./views/helpers/user-views.js"
 
 const app = express()
 app.set('view engine', 'ejs')
 
-mongoose.connect('mongodb://127.0.0.1:27017/wavetype')
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('💽 Database connected'))
     .catch(error => console.error(error))
 
@@ -17,8 +18,6 @@ const userSchema = new mongoose.Schema({
 })
 
 const User = mongoose.model('User', userSchema)
-
-const PORT = 3001
 
 app.use(logger)
 //app.use('/wavetype',express.static('public'))
@@ -222,6 +221,6 @@ app.get('/error', (req, res) => {
 //-----------------------------------------------
 
 
-app.listen(PORT, ()=>{
-    console.log(`👋 Started server on port ${PORT}`)
+app.listen(process.env.PORT, ()=>{
+    console.log(`👋 Started server on port ${process.env.PORT}`)
 })
