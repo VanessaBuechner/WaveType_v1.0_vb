@@ -213,7 +213,7 @@ app.post('/search', function (request, response){
  
 })
 
-app.get('/error', (request, res) => {
+app.get('/error', (request, response) => {
     response.send(`The artist or track does not have lyrics`)
 })
 

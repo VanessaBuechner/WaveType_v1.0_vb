@@ -1,9 +1,11 @@
-const colorUntyped = 'rgb(189, 189, 189)'
+const default_color_lyrics = 'rgb(189, 189, 189)'
                 const display = document.querySelector('.display-text')
                 const keyboard = document.querySelector('.keyboard')
 
-                const sentence = document.querySelector('.lyrics-span').innerText
-                const kb_rows = [
+                let fetched_lyrics = document.querySelector('.lyrics-span').innerText
+                if(fetched_lyrics == '') fetched_lyrics = 'Search for lyrics from your favourite artists...'
+               
+                const keyboard_rows = [
                         '^ 1 2 3 4 5 6 7 8 9 0 ß ´ Backspace',
                         'Tab q w e r t z u i o p ü + Enter',
                         'CapsLock a s d f g h j k l ö ä # Enter2',
@@ -11,15 +13,14 @@ const colorUntyped = 'rgb(189, 189, 189)'
                         'Fn Control Alt Meta Space Meta Alt ArrowLeft ArrowUp/ArrowDown ArrowRight'
                     ]
 
-                const congrats = (t, f, time) =>{
-                    if(confirm(`Congrats you did it! \n
-                    You had ${t - f} out of ${sentence.length} correct. \n
+                const congrats_message = (t, f, time, backspace_count) =>{
+                    if(confirm(`\t Congrats you did it! \n
+                    You had ${fetched_lyrics.length / t * 100}% of characters correct. \n
                     Your mistake count is: ${f}. \n
+                    Your used backspace: ${backspace_count} times. \n
                     Time: ${time} \n
                     Do you want to reload?`)){
-                        const relativeURL = '/'
-                        const absoluteURL = new URL(relativeURL, window.location.href)
-                        window.location.href = absoluteURL.href
+                        window.location.href = '/'
                     }
                     // alert(`Congrats you did it! Your mistakes count is: ${f}`)
                 }
@@ -28,27 +29,27 @@ const colorUntyped = 'rgb(189, 189, 189)'
                     const scrollTo = document.querySelector('#scrollTo').innerText
                     document.querySelector(scrollTo).scrollIntoView()
 
-                    sentence.split('').map((e)=>{
-                        const span = document.createElement('span')
-                        span.style.color = colorUntyped
-                        span.style.fontSize = '2vw'
-                        span.innerText = e
-                        display.append(span)
+                    fetched_lyrics.split('').map((e)=>{
+                        const span_lyrics_letter = document.createElement('span')
+                        span_lyrics_letter.style.color = default_color_lyrics
+                        span_lyrics_letter.style.fontSize = '2vw'
+                        span_lyrics_letter.innerText = e
+                        display.append(span_lyrics_letter)
                     })
                 
 
     
-                    kb_rows.map((e)=>{
-                        const div_row = document.createElement('div')
-                        div_row.classList.add('kb-row')
+                    keyboard_rows.map((e)=>{
+                        const div_keyboard_row = document.createElement('div')
+                        div_keyboard_row.classList.add('kb-row')
                         
 
                         e.split(' ').map((e)=>{
-                            const div_key = document.createElement('div')
-                            div_key.classList.add('kb-key')
+                            const div_keyboard_key = document.createElement('div')
+                            div_keyboard_key.classList.add('kb-key')
 
                             if(e == 'ArrowUp/ArrowDown'){
-                                div_key.style.background = 'transparent'
+                                div_keyboard_key.style.background = 'transparent'
                                 let arrows = e.split('/')
                                 arrows.map((e)=>{
                                     const arrow_key = document.createElement('div')
@@ -58,59 +59,59 @@ const colorUntyped = 'rgb(189, 189, 189)'
                                     arrow_key.id = e
                                     arrow_key.classList.add('kb-key-item')
 
-                                    div_key.append(arrow_key)
+                                    div_keyboard_key.append(arrow_key)
                                 })
                                 
                             }else{
-                                div_key.innerText = e
-                                div_key.id = e
+                                div_keyboard_key.innerText = e
+                                div_keyboard_key.id = e
                             }
 
                             switch (e) {
                                 case 'Backspace':
-                                    div_key.innerText = '⌫'
-                                    div_key.style.width = `76px`
+                                    div_keyboard_key.innerText = '⌫'
+                                    div_keyboard_key.style.width = `76px`
                                     break
                                 case 'Enter':
-                                    div_key.innerText = '⏎'
-                                    div_key.style.width = `76px`
+                                    div_keyboard_key.innerText = '⏎'
+                                    div_keyboard_key.style.width = `76px`
                                     break
                                 case 'Tab':
-                                    div_key.innerText = '⇥'
+                                    div_keyboard_key.innerText = '⇥'
                                     break
                                 case 'Shift':
-                                    div_key.innerText = '⇧'
-                                    div_key.style.width = `76px`
+                                    div_keyboard_key.innerText = '⇧'
+                                    div_keyboard_key.style.width = `76px`
                                     break
                                 case 'CapsLock':
-                                    div_key.innerText = '⇪'
-                                    div_key.style.width = `76px`
+                                    div_keyboard_key.innerText = '⇪'
+                                    div_keyboard_key.style.width = `76px`
                                     break
                                 case 'Space':
-                                    div_key.style.width = `190px`
+                                    div_keyboard_key.style.width = `190px`
                                     break
                                 case 'Control':
-                                    div_key.innerText = 'Ctr'
+                                    div_keyboard_key.innerText = 'Ctr'
                                     break
                                 case 'Meta':
-                                    div_key.innerText = 'Cmd'
+                                    div_keyboard_key.innerText = 'Cmd'
                                     break
                                 case 'ArrowLeft':
-                                    div_key.innerText = '←'
-                                    div_key.style.fontSize = '12px'
+                                    div_keyboard_key.innerText = '←'
+                                    div_keyboard_key.style.fontSize = '12px'
                                     break
                                 case 'ArrowRight':
-                                    div_key.innerText = '→'
-                                    div_key.style.fontSize = '12px'
+                                    div_keyboard_key.innerText = '→'
+                                    div_keyboard_key.style.fontSize = '12px'
                                     break
                                 default:
                                     break
                             }
 
-                            div_row.append(div_key)
+                            div_keyboard_row.append(div_keyboard_key)
                         })
 
-                        keyboard.append(div_row)
+                        keyboard.append(div_keyboard_row)
                     })
                     
                })
@@ -125,40 +126,44 @@ const colorUntyped = 'rgb(189, 189, 189)'
 
                 let false_count = 0
                 let true_count = 0
+                let backspace_count = 0
 
                 
-             
-                const div = document.querySelector('.timer')
-                let mousedown = false
+                //FUNCTIONALITY WILL BE ADDED IN LATER RELEASE ----------------------
+                    // const div = document.querySelector('.timer')
+                    // let mousedown = false
 
-                div.addEventListener('mousedown', (e)=>{ 
-                    mousedown = true
-                    console.log('true')
-                })
+                    // div.addEventListener('mousedown', (e)=>{ 
+                    //     mousedown = true
+                    //     console.log('true')
+                    // })
 
-                div.addEventListener('mouseup', (e)=>{
-                    mousedown = false
-                    console.log('false')
-                })
+                    // div.addEventListener('mouseup', (e)=>{
+                    //     mousedown = false
+                    //     console.log('false')
+                    // })
 
-                div.addEventListener('mousemove', (e)=>{
-                    
-                    if(mousedown == true){
-                        let x = e.clientX - 50
-                        let y = e.clientY - 10
-    
-                        div.style.left = `${x}px`
-                        div.style.top = `${y}px`
-                        console.log(x,y)
-                    }
-                    // console.log(div.offsetLeft)
-                    })
-
+                //IMPLEMENTATION IN LATER RELEASE 
+                    // div.addEventListener('mousemove', (e)=>{
+                        
+                    //     if(mousedown == true){
+                    //         let x = e.clientX - 50
+                    //         let y = e.clientY - 10
+        
+                    //         div.style.left = `${x}px`
+                    //         div.style.top = `${y}px`
+                    //         console.log(x,y)
+                    //     }
+                    //     // console.log(div.offsetLeft)
+                    // })
+                //--------------------------------------------------------
 
 
                 document.querySelector('.typing-start').addEventListener('click', (e)=>{
                     document.querySelector('.display-start').style.display = 'none'
 
+
+                    //timer for typewriter
                     let timer = setInterval(() => {
                         let min = ''
                         let sec = ''
@@ -181,8 +186,8 @@ const colorUntyped = 'rgb(189, 189, 189)'
                             seconds = 0
                             minutes += 1
 
-                            if(minutes == 2){
-                                congrats(true_count, false_count, time)
+                            if(minutes == 1){
+                                congrats_message(true_count, false_count, time, backspace_count)
                                 clearInterval(timer)
                             }
                         }
@@ -220,8 +225,6 @@ const colorUntyped = 'rgb(189, 189, 189)'
                             // console.log(characters.length)
                             
                             if(e.key == characters[i].innerText){
-                                // document.querySelector('.keyboard').style.background = 'rgb(156, 227, 161)'
-    
                                 true_count += 1
                                 characters[i].style.color = 'rgb(156, 227, 161)'
                                 i++
@@ -229,7 +232,7 @@ const colorUntyped = 'rgb(189, 189, 189)'
                                 if(i == characters.length){
                                     complete = true
                                     setTimeout(function(){
-                                        congrats(true_count, false_count, time)
+                                        congrats_message(true_count, false_count, time, backspace_count)
                                         clearInterval(timer)
                                     }, 300);
                                 }
@@ -237,7 +240,7 @@ const colorUntyped = 'rgb(189, 189, 189)'
                                 break
                             }else if(e.key == 'Backspace' && i > 0){
                                 i--
-                                console.log('backspace', i)
+                                backspace_count += 1
                                 characters[i].style.color = 'rgb(189, 189, 189)'
                                 break
                             }else if(e.key == 'Shift'){

@@ -80,6 +80,7 @@ button.typing-start:hover{
 
 .display-text{
    /* font-size: 10px; */
+   height: 90%;
    padding: 50px 100px 50px 100px;
 }
 
