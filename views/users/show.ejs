@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../includes/head.ejs', {title: `${user.name} | WaveType`}) %>
-<body>
+<body class="nav-header">
   <%- include('../includes/header.ejs') %>
 
   <main>
-    <h1><%= user.name %></h1>
-    <p>
-      <strong>Score: <%= user.score %></strong>
-    </p>
+    <main-container-3 class="dark">
+      <div class="mc3-item">
+        <h1><%= user.name %></h1>
+        <p>
+          <strong>Score: <%= user.score %></strong>
+        </p>
+      </div>
+      
+    </main-container-3>
+    
   </main>
 
   <%- include('../includes/footer.ejs') %>

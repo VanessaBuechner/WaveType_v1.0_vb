@@ -21,58 +21,40 @@ const User = mongoose.model('User', userSchema)
 const PORT = 3001
 
 app.use(logger)
-app.use('/wavetype',express.static('public'))
+//app.use('/wavetype',express.static('public'))
+app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-
-
-const insertReqToHTML = (resp) =>{
-    let html = `<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Not found</title>
-
-            <style>
-                html, body{
-                    margin: 0;
-                    padding: 0;
-                    height: 100%;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-size: 2vw;
-                }
-                .container{
-                    height: 100%;
-                    display: grid;
-                    align-items: center;
-                    justify-items: center;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                ${resp}
-            </div>
-        </body>
-        </html>`
-return html
-}
-
 app.get('/', (request, response) => {
-    response.render('index')
+    response.render('index', {lyrics: '', scroll: 'main-container-1'})
+})
+
+app.get('/wavetype', (request, response) => {
+    response.redirect('/')
+})
+
+app.get('/about', (request, response) => {
+    response.render('about', {hClass: "nav-header-1"})
+})
+
+app.get('/contact', (request, response) => {
+    response.render('contact', {hClass: "nav-header-1"})
+})
+
+app.get('/test', (request, response) => {
+    response.render('test')
 })
 
 app.get('/wavetype/:keyword', (request, response) => {
-    const req = request.params.keyword
+    const keyword = request.params.keyword
 
-    if(req == 'dog'){
-        response.send(insertReqToHTML(`<h2>${req} 🐶</h2>`))
-    }else if(req == 'cat'){
-        response.send(insertReqToHTML(`<h2>${req} 🐱</h2>`))
+    if(keyword == 'dog'){
+        response.render('random-slug', {keyword: `${keyword} 🐶`})
+    }else if(keyword == 'cat'){
+        response.render('random-slug', {keyword: `${keyword} 🐱`})
     }else{
-        response.send(insertReqToHTML(`<h2>${req} was not found 🥶</h2>`))   
+        response.render('random-slug', {keyword: `${keyword} was not found 🥶`}) 
     }
 })
 
@@ -87,13 +69,15 @@ app.get('/users/view', async (request, response) => {
   
       response.render('users/index', { 
         users: users,
-        readableScore: readableScore
+        readableScore: readableScore,
+        hClass: "nav-header-2"
       })
     }catch(error) {
       console.error(error)
       response.render('users/index', { 
         users: [],
-        readableScore: readableScore
+        readableScore: readableScore,
+        hClass: "nav-header-2"
       })
     }
   })
@@ -106,7 +90,8 @@ app.get('/users/view', async (request, response) => {
   
       response.render('users/show', { 
         user: user,
-        readableScore: readableScore
+        readableScore: readableScore,
+        hClass: "nav-header-2"
       })
     }catch(error) {
       console.error(error)
@@ -122,7 +107,10 @@ app.get('/users/view', async (request, response) => {
       const user = await User.findOne({ slug: slug }).exec()
       if(!user) throw new Error('User not found')
         
-      response.render('users/edit', { user: user })
+      response.render('users/edit', { 
+        user: user,
+        hClass: "nav-header-2" 
+        })
     }catch(error) {
       console.error(error)
       response.status(404).send('Could not find the user you\'re looking for.')
@@ -153,14 +141,14 @@ app.get('/users/view', async (request, response) => {
       response.redirect('/users/view')
     }catch (error) {
       console.error(error)
-      response.send('Error: No cookie was deleted.')
+      response.send('Error: No user was deleted.')
     }
   })
 
   //CREATE USERS
 
 app.get('/users/new', (request, response) => {
-    response.render('users/new')
+    response.render('users/new', {hClass: "nav-header-2"})
 })
 
 app.post('/users', async (request, response) => {
@@ -181,7 +169,58 @@ app.post('/users', async (request, response) => {
     }
 })
 
+//---------------------LYRICS API CALL--------------------------
+
+app.post('/search', function (req, res){
+        const token_musix_match = '022ff8e27231cdc93a8f12b489f30fb1'
+        const api_link_musix_match = 'https://api.musixmatch.com/ws/1.1/'
+
+        const artist_musix_match = req.body.artist
+        const track_musix_match = req.body.track
+
+        const query_musix_match = `${api_link_musix_match}track.search?q_artist=${artist_musix_match}&q_track=${track_musix_match}&page_size=1&page=1&s_track_rating=desc&apikey=${token_musix_match}`
+
+       
+
+        fetch(query_musix_match)
+        .then(res_id => res_id.json())
+        .then((json_id) => {
+            let track_id = ''
+            track_id += json_id.message.body.track_list[0].track.track_id
+    
+            console.log(json_id)
+            if(json_id.message.header.status_code == 200){
+                const lyrics_musix_match = `${api_link_musix_match}track.lyrics.get?track_id=${track_id}&apikey=${token_musix_match}`
+                return fetch (lyrics_musix_match) 
+            }else{
+                throw 'There is no artist or track in the musixmatch database'
+            }  
+        })
+        .then(res_lyrics => res_lyrics.json())
+        .then((json_lyrics) => {
+            if(json_lyrics.message.header.status_code == 200){
+                const lyrics = json_lyrics.message.body.lyrics.lyrics_body
+
+                // lyrics = lyrics.split('*******')[0].split('\n')
+                // res.send(insertTextHtml(lyrics))
+                res.render('index', {lyrics: lyrics, scroll: '.display-start'})
+            }else{
+                throw 'The artist or track does not have lyrics'
+            } 
+        })
+        .catch((err) => {
+            console.log(err)
+            res.redirect('/error')
+        })
+ 
+})
+
+app.get('/error', (req, res) => {
+    res.send(`The artist or track does not have lyrics`)
+})
+
 //-----------------------------------------------
+
 
 app.listen(PORT, ()=>{
     console.log(`👋 Started server on port ${PORT}`)

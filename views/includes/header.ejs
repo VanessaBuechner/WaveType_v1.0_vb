@@ -1,9 +1,15 @@
-<header>
-    <h1>WaveType</h1>
 
+
+<header class="<%- hClass %>">
     <nav>
-      <a href="/wavetype">Home</a>&nbsp;|&nbsp;
-      <a href="/wavetype/about.html">About</a>&nbsp;|&nbsp;
-      <a href="/wavetype/contact.html">Contact</a>
+        <nav-bar>
+            <ul>
+                <li><a class="menu-btn" href="/">Me<br/>nu</a></li>
+                <div class="hidden-menu" style="display: none;">
+                    <li><a class="menu-btn-toggled" href="/about">About</a></li>
+                    <li><a class="menu-btn-toggled" href="/contact">Contact</a></li>
+                </div>
+            </ul>
+        </nav-bar>
     </nav>
-  </header>
+</header>
