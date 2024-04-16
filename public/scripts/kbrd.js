@@ -15,7 +15,7 @@ const default_color_lyrics = 'rgb(189, 189, 189)'
 
                 const congrats_message = (t, f, time, backspace_count) =>{
                     if(confirm(`\t Congrats you did it! \n
-                    You had ${fetched_lyrics.length / t * 100}% of characters correct. \n
+                    You had ${t}% of characters correct. \n
                     Your mistake count is: ${f}. \n
                     Your used backspace: ${backspace_count} times. \n
                     Time: ${time} \n
