@@ -4,18 +4,22 @@
 <body>
     <span id="scrollTo" style="display: none;"><%= scroll %></span>
     <header>
-      <nav>
-          <nav-bar>
-              <ul>
-                  <li><a class="menu-btn" href="/">Me<br/>nu</a></li>
-                  <div class="hidden-menu" style="display: none;">
-                      <li><a class="menu-btn-toggled" href="/about">About</a></li>
-                      <li><a class="menu-btn-toggled" href="/contact">Contact</a></li>
-                  </div>
-              </ul>
-          </nav-bar>
-      </nav>
-  </header>
+        <nav>
+            <nav-bar>
+                <div class="wrapper">
+                
+                        <a class="menu-btn" href="/">Me<br/>nu</a>
+                        <div class="hidden-menu" style="display: hidden;">
+                            <a class="menu-btn-toggled menu-about" href="/about">About</a> 
+                            <a class="menu-btn-toggled menu-user" href="/user">User</a>   
+                            <a class="menu-btn-toggled menu-contact" href="/contact">Contact</a> 
+                        </div>
+                    
+                </div>
+                
+            </nav-bar>
+        </nav>
+    </header>
     <main>
         <main-container-1>
             <div class="mc1-item-1">

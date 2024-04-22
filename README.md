@@ -63,5 +63,5 @@ This Express application serves as a web platform for displaying information abo
 - Used for functionality of typewriter
 - Functionalities include: API call to MusixMatch, Searching for lyrics of different artists, typing on digital keyboard, viewing typing errors and stats
 
-##### Important!!! WaveType is still work in progress 
+## Important!!! WaveType is still work in progress 
 

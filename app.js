@@ -41,8 +41,12 @@ app.get('/contact', (request, response) => {
     response.render('contact', {hClass: "nav-header-1"})
 })
 
-app.get('/test', (request, response) => {
-    response.render('test')
+app.get('/kbrd-test', (request, response) => {
+    response.render('kbrd-test')
+})
+
+app.get('/user', (request, response) => {
+  response.render('user', {hClass: "nav-header-1"})
 })
 
 app.get('/wavetype/:keyword', (request, response) => {
@@ -74,6 +78,26 @@ app.get('/users/view', async (request, response) => {
     }catch(error) {
       console.error(error)
       response.render('users/index', { 
+        users: [],
+        readableScore: readableScore,
+        hClass: "nav-header-2"
+      })
+    }
+  })
+
+  app.get('/users/which', async (request, response) => {
+    try {
+      const users = await User.find({}).exec()
+      console.log(users)
+  
+      response.render('users/which', { 
+        users: users,
+        readableScore: readableScore,
+        hClass: "nav-header-2"
+      })
+    }catch(error) {
+      console.error(error)
+      response.render('users/which', { 
         users: [],
         readableScore: readableScore,
         hClass: "nav-header-2"
