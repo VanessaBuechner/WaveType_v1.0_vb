@@ -183,7 +183,10 @@ app.post('/search', function (request, response){
 
         fetch(query_musix_match)
         .then(response_id => {
-          console.log('api call successful', response_id)
+          console.log('artist', artist_musix_match)
+          console.log('track', track_musix_match)
+          console.log(query_musix_match)
+          console.log('api call successful', response_id.json().message)
           return response_id.json()
         })
         .then((json_id) => {
