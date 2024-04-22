@@ -182,7 +182,10 @@ app.post('/search', function (request, response){
        
 
         fetch(query_musix_match)
-        .then(response_id => response_id.json())
+        .then(response_id => {
+          console.log('api call successful', response_id)
+          return response_id.json()
+        })
         .then((json_id) => {
             let track_id = ''
             track_id += json_id.message.body.track_list[0].track.track_id
