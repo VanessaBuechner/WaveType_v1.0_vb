@@ -179,16 +179,8 @@ app.post('/search', function (request, response){
 
         const query_musix_match = `${api_link_musix_match}track.search?q_artist=${artist_musix_match}&q_track=${track_musix_match}&page_size=1&page=1&s_track_rating=desc&apikey=${token_musix_match}`
 
-       
-
         fetch(query_musix_match)
-        .then(response_id => {
-          console.log('artist', artist_musix_match)
-          console.log('track', track_musix_match)
-          console.log(query_musix_match)
-          console.log('api call successful', response_id.json().message)
-          return response_id.json()
-        })
+        .then(response_id => response_id.json())
         .then((json_id) => {
             let track_id = ''
             track_id += json_id.message.body.track_list[0].track.track_id
@@ -199,9 +191,8 @@ app.post('/search', function (request, response){
                 return fetch (lyrics_musix_match) 
             }else{
                 console.log(json_id.message) 
-                
+            
                 throw ('Error: There is no artist or track in the musixmatch database', `artist: ${artist_musix_match}, song: ${track_musix_match}`)
-                throw 'There is no artist or track in the musixmatch database'
             }  
         })
         .then(response_lyrics => response_lyrics.json())
@@ -214,13 +205,10 @@ app.post('/search', function (request, response){
             }else{
                 console.log(json_id.message) 
                 throw ('Error: The artist or track does not have lyrics', `artist: ${artist_musix_match}, song: ${track_musix_match}`)
-
-                throw 'The artist or track does not have lyrics'
             } 
         })
         .catch((err) => {
             console.log(err)
-            // response.render('error', {error: err})
         })
  
 })
