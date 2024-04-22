@@ -1,8 +1,8 @@
 import express from "express"
 import mongoose from "mongoose"
-import "dotenv/config"
 import { logger } from './middlewares/logger.js'
 import { readableScore } from "./views/helpers/user-views.js"
+import "dotenv/config"
 
 const app = express()
 app.set('view engine', 'ejs')
@@ -192,8 +192,10 @@ app.post('/search', function (request, response){
                 const lyrics_musix_match = `${api_link_musix_match}track.lyrics.get?track_id=${track_id}&apikey=${token_musix_match}`
                 return fetch (lyrics_musix_match) 
             }else{
-                throw json_id.message.header
-                // throw 'There is no artist or track in the musixmatch database'
+                console.log(json_id.message) 
+                
+                throw ('Error: There is no artist or track in the musixmatch database', `artist: ${artist_musix_match}, song: ${track_musix_match}`)
+                throw 'There is no artist or track in the musixmatch database'
             }  
         })
         .then(response_lyrics => response_lyrics.json())
@@ -204,21 +206,23 @@ app.post('/search', function (request, response){
                 // lyrics = lyrics.split('*******')[0].split('\n')
                 response.render('index', {lyrics: lyrics, scroll: '.display-start'})
             }else{
-                throw json_lyrics.message.header
-                // throw 'The artist or track does not have lyrics'
+                console.log(json_id.message) 
+                throw ('Error: The artist or track does not have lyrics', `artist: ${artist_musix_match}, song: ${track_musix_match}`)
+
+                throw 'The artist or track does not have lyrics'
             } 
         })
         .catch((err) => {
             console.log(err)
-            response.redirect('/error', {error_log: err})
+            response.render('error', {error: err})
         })
  
 })
 
-app.get('/error', (request, response) => {
-    console.log(error_log)
-    response.send(`The artist or track does not have lyrics`)
-})
+// app.get('/error', (request, response) => {
+//   response.render('error', {error: err})
+//     // response.send(`The artist or track does not have lyrics`)
+// })
 
 //-----------------------------------------------
 
