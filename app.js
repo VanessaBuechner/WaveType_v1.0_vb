@@ -214,7 +214,7 @@ app.post('/search', function (request, response){
         })
         .catch((err) => {
             console.log(err)
-            response.render('error', {error: err})
+            // response.render('error', {error: err})
         })
  
 })
