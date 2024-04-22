@@ -79,6 +79,14 @@ div.hidden-menu{
     column-gap: 10px;
 }
 
-/* .menu-link{
-    display: hidden;
-} */
+/* ---------------media queries------------------------------ */
+
+/* 
+@media only screen and (max-width: 500px) {
+    .nav{
+        height: 60px;
+        padding: 0 10px 0 10px;
+        font-size: 10px;
+        background-color: aqua;
+    }
+}  */

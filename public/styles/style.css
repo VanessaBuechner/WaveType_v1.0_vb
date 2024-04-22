@@ -77,6 +77,7 @@ body.nav-header{
 main{
     grid-area: main;
     height: 100vh;
+    width: 100vw;
 
     z-index: 1;
 }
@@ -85,6 +86,7 @@ main{
 
 main-container-1{
     height: 100%;
+    width: 100vw;
     background-image: url(../images/jan-loyde-cabrera-J3A5rtfHu0M-unsplash.jpg);
     
     display: grid;
@@ -132,6 +134,7 @@ main-container-1{
 
 main-container-2{
     height: 100%;
+    width: 100vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
 
@@ -170,6 +173,7 @@ img.mc2-img{
 
 main-container-3{
     height: 100%;
+    width: 100vw;
     display: grid;
     grid-template-columns: 1fr;
   
@@ -287,6 +291,7 @@ a.view-users:hover{
 
 main-container-4{
     height: 50%;
+    width: 100vw;
     background-color: var(--black);
 
     border-bottom: 2px solid black;
@@ -303,8 +308,11 @@ svg{
 
 main-container-5{
     height: 100%;
-    /* grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr; */
+    width: 100vw;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    /* grid-template-rows: 1fr 1fr;  */
   
 }
 
@@ -367,5 +375,42 @@ main-container-5{
 
 
 /* ---------------media queries------------------------------ */
+
+@media only screen and (max-width: 400px) {
+    [class^="mc1-item-"]{
+        font-size: calc(var(--font-size-brand) + 10px);
+    }
+    main-container-1, main-container-2, main-container-3{
+        height: 50%;
+    }
+    main-container-4{
+        height: 10%;
+    }
+    .keyboard{
+        height: calc(250px - 50%);
+        width: calc(640px - 50%);
+    }
+} 
+
+@media only screen and (max-width: 600px) {
+    [class^="mc1-item-"]{
+        font-size: calc(var(--font-size-brand) + 20px);
+    }
+    main-container-1, main-container-2, main-container-3{
+        height: 60%;
+    }
+    main-container-4{
+        height: 20%;
+    }
+    .keyboard{
+        height: calc(250px - 40%);
+        width: calc(640px - 40%);
+    }
+    /* kb-container{
+        height: 60%;
+        width: 30%;
+        
+    } */
+} 
 
 
