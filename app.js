@@ -192,6 +192,7 @@ app.post('/search', function (request, response){
                 const lyrics_musix_match = `${api_link_musix_match}track.lyrics.get?track_id=${track_id}&apikey=${token_musix_match}`
                 return fetch (lyrics_musix_match) 
             }else{
+                console.log(json_id.message.header)
                 throw 'There is no artist or track in the musixmatch database'
             }  
         })
@@ -203,6 +204,7 @@ app.post('/search', function (request, response){
                 // lyrics = lyrics.split('*******')[0].split('\n')
                 response.render('index', {lyrics: lyrics, scroll: '.display-start'})
             }else{
+                console.log(json_lyrics.message.header)
                 throw 'The artist or track does not have lyrics'
             } 
         })
